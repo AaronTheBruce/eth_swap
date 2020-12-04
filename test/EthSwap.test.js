@@ -44,7 +44,7 @@ contract('EthSwap', ([deployer, investor]) => {
   describe('buy tokens', async () => {
     let result;
     before(async() => {
-      result = ethSwap.buyTokens({from: investor, value: `${tokens('1')}`});
+      result = await ethSwap.buyTokens({from: investor, value: web3.utils.toWei('1', 'ether')});
     })
     it('Allows user to instantly purchase tokens from ethSwap for a fixed price', async () => {
       let investorBalance = await token.balanceOf(investor);
@@ -56,7 +56,11 @@ contract('EthSwap', ([deployer, investor]) => {
       ethSwapBalance = await web3.eth.getBalance(ethSwap.address);
       assert.equal(ethSwapBalance.toString(), tokens('1'));
 
-      console.log(await result.logs)  // logs not printing right
+      const event = result.logs[0].args;
+      assert.equal(event.account, investor);
+      assert.equal(event.token, token.address);
+      assert.equal(event.amount.toString(), tokens('100').toString());
+      assert.equal(event.rate.toString(), '100');
     })
   })
 
