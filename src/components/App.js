@@ -22,27 +22,35 @@ class App extends Component {
     const web3 = await window.web3;
 
     const accounts = await web3.eth.getAccounts();
-    this.setState({account: accounts[0]});
+    this.setState({ account: accounts[0] });
 
     const ethBalance = await web3.eth.getBalance(this.state.account);
-    this.setState({ethBalance});
+    this.setState({ ethBalance });
 
 
     // Load Token
     const networkId = await web3.eth.net.getId();
     const tokenData = Token.networks[networkId];
-    if(tokenData){
+    if (tokenData) {
       const token = new web3.eth.Contract(Token.abi, tokenData.address)
-      this.setState({token});
+      this.setState({ token });
       let tokenBalance = await token.methods.balanceOf(this.state.account).call();
-      this.setState({tokenBalance: tokenBalance.toString()})
+      this.setState({ tokenBalance: tokenBalance.toString() })
     } else {
       window.alert('Token Contract not deployed to detected network')
     }
 
 
     // Load EthSwap
+    const ethSwapData = EthSwap.networks[networkId];
+    if (ethSwapData) {
+      const ethSwap = new web3.eth.Contract(EthSwap.abi, ethSwapData.address);
+      this.setState({ ethSwap })
+    } else {
+      window.alert('EthSwap contract not deployed to detected network');
+    }
 
+    this.setState({ loading: false })
   }
 
   async loadWeb3() {
@@ -71,17 +79,14 @@ class App extends Component {
     }
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       account: '',
+      token: {},
+      ethSwap: {},
       ethBalance: '0',
-      daiToken: {},
-      dappToken: {},
-      tokenFarm: {},
-      daiTokenBalance: '0',
-      dappTokenBalance: '0',
-      stakingBalance: '0',
+      tokenBalance: '0',
       loading: true
     }
   }
