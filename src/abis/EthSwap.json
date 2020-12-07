@@ -4036,14 +4036,78 @@
   },
   "networks": {
     "5777": {
-      "events": {},
+      "events": {
+        "0x8daf503382665d950e449b86172be5222275c90f4ddf69c29fdaa8237a562a6d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "rate",
+              "type": "uint256"
+            }
+          ],
+          "name": "TokenPurchased",
+          "type": "event"
+        },
+        "0x697c42d55a5e1fed3f464ec6f38b32546a0bd368dc8068b065c67566d73f3290": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "rate",
+              "type": "uint256"
+            }
+          ],
+          "name": "TokensSold",
+          "type": "event"
+        }
+      },
       "links": {},
-      "address": "0xb5285C5a05bB921a0D20e8D1Ae3d70623C00f8E2",
-      "transactionHash": "0xe29c9285f3f412e793a319e976a7e0b7cc4f2fd012414a941270ea2f7a341cee"
+      "address": "0xFeB67d92beC6345959EFeC9D7Dc77933035738c1",
+      "transactionHash": "0xa30c93e56cd11e43847b5d7c673eab4660707a222b184eba24ad0d2e2d0dfc74"
     }
   },
   "schemaVersion": "3.3.2",
-  "updatedAt": "2020-12-04T20:54:40.790Z",
+  "updatedAt": "2020-12-04T21:26:03.929Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
