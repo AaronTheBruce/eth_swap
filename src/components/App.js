@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import EthSwap from '../abis/EthSwap.json';
 import Token from '../abis/Token.json';
 import NavBar from './NavBar';
+import Main from './Main';
 import './App.css';
 
 /**
@@ -79,6 +80,22 @@ class App extends Component {
     }
   }
 
+  buyTokens = etherAmount => {
+    this.setState({ loading: true });
+    this.state.ethSwap.methods.buyTokens().send({ value: etherAmount, from: this.state.account }).on('transactionHash', hash => {
+      this.setState({ loading: false });
+    })
+  }
+
+  sellTokens = tokenAmount => {
+    this.setState({loading: true});
+    this.state.token.methods.approve(this.state.ethSwap.address, tokenAmount).send({from: this.state.account}).on('transactionHash', (hash) => {
+      this.state.ethSwap.methods.sellTokens(tokenAmount).send({from: this.state.account}).on('transactionHash', (hash) => {
+        this.setState({loading: false})
+      })
+    })
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -92,6 +109,17 @@ class App extends Component {
   }
 
   render() {
+    let content
+    if (this.state.loading) {
+      content = <p id="loader" className="text-center">Loading...</p>
+    } else {
+      content = <Main
+        ethBalance={this.state.ethBalance}
+        tokenBalance={this.state.tokenBalance}
+        buyTokens={this.buyTokens}
+        sellTokens={this.sellTokens}
+      />
+    }
     return (
       <div>
         <NavBar account={this.state.account} />
@@ -105,7 +133,7 @@ class App extends Component {
                   rel="noopener noreferrer"
                 >
                 </a>
-                <h1>Hello World!</h1>
+                {content}
               </div>
             </main>
           </div>
